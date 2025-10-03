@@ -455,3 +455,19 @@ input[type="url"] {
   font-size: 1rem;
   background: rgba(255, 255, 255, 0.9);
 }
+
+.current-image.image-container {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.current-book-cover {
+  max-width: 200px;
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}

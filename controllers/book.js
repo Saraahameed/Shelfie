@@ -131,15 +131,26 @@ router.get('/:bookId/edit', async (req, res) => {
   }
 });
 
+
 // UPDATE - update a book
-router.put('/:bookId', async (req, res) => {
+router.put('/:bookId', upload.single('imageFile'), async (req, res) => {
   try {
+    let imageData = req.body.imageUrl; // Keep existing URL if no new file
+
+    // If a file was uploaded, convert to base64
+    if (req.file) {
+      imageData = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
+    }
+
     const book = await Book.findOneAndUpdate(
       {
         _id: req.params.bookId,
         userId: req.session.user._id
       },
-      req.body,
+      {
+        ...req.body,
+        imageUrl: imageData || req.body.imageUrl // Use new image data or keep existing URL
+      },
       { new: true }
     );
 
