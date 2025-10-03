@@ -37,7 +37,7 @@
 
     <div class="book-actions">
       <a href="/books/<%= book._id %>" class="btn-small btn-view">View</a>
-      <% if (book.userId && book.userId._id.toString() === user._id.toString()) { %>
+      <% if (user && book.userId && book.userId._id && user._id && book.userId._id.toString() === user._id.toString()) { %>
       <a href="/books/<%= book._id %>/edit" class="btn-small btn-edit">Edit</a>
       <form action="/books/<%= book._id %>?_method=DELETE" method="POST" style="display:inline;">
         <button type="submit" class="btn-small btn-delete">Delete</button>
