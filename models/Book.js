@@ -39,6 +39,10 @@ const bookSchema = new mongoose.Schema({
     ref: 'User',
     required: true
   },
+  imageUrl: {
+    type: String, // This will now store the base64 string
+    default: ''
+  },
   reviews: [reviewSchema],
   averageRating: {
     type: Number,

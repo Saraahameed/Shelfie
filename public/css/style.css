@@ -416,3 +416,42 @@ a:hover {
 .book-card:hover .book-cover {
   background: linear-gradient(135deg, #9b6dff30, #6c2bd930);
 }
+
+/* Image input section styles */
+.image-input-section {
+  margin-bottom: 1.5rem;
+}
+
+.image-options {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.upload-option,
+.url-option {
+  flex: 1;
+}
+
+.divider {
+  color: #666;
+  font-weight: 600;
+}
+
+input[type="file"] {
+  width: 100%;
+  padding: 0.5rem;
+  border: 2px solid #e1e5e9;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+input[type="url"] {
+  width: 100%;
+  padding: 0.8rem;
+  border: 2px solid #e1e5e9;
+  border-radius: 10px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.9);
+}

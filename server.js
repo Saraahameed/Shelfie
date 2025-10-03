@@ -9,6 +9,7 @@ const morgan = require('morgan');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const path = require("path");
+const multer = require('multer');
 
 // Import models
 const Book = require('./models/Book.js');
@@ -28,6 +29,21 @@ const PORT = process.env.PORT || '3000';
 app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
+
+// Configure multer for file upload
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/uploads/books')
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname)
+  }
+});
+
+const upload = multer({ storage: storage });
+
+// Add this middleware before your routes
+app.use('/uploads', express.static('public/uploads'));
 
 // Session middleware
 app.use(

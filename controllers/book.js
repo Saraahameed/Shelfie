@@ -2,6 +2,16 @@ const express = require('express');
 const router = express.Router();
 const Book = require('../models/Book.js');
 const User = require('../models/user.js');
+const multer = require('multer');
+
+// Configure multer for memory storage instead of disk
+const storage = multer.memoryStorage();
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 5 * 1024 * 1024 // 5MB limit
+  }
+});
 
 // INDEX - list all books
 router.get('/', async (req, res) => {
@@ -34,8 +44,19 @@ router.get('/discover', async (req, res) => {
 });
 
 // CREATE - add new book
-router.post('/', async (req, res) => {
+router.post('/', upload.single('imageFile'), async (req, res) => {
   try {
+    let imageData = '';
+
+    // If a file was uploaded, convert to base64
+    if (req.file) {
+      imageData = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
+    }
+    // If no file but URL provided, use the URL
+    else if (req.body.imageUrl) {
+      imageData = req.body.imageUrl;
+    }
+
     // Check if book already exists
     const existingBook = await Book.findOne({
       title: req.body.title,
@@ -51,6 +72,7 @@ router.post('/', async (req, res) => {
     // Create new book
     const book = await Book.create({
       ...req.body,
+      imageUrl: imageData,
       userId: req.session.user._id
     });
 
