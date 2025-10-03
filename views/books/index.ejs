@@ -50,6 +50,12 @@
           </div>
           <% } %>
 
+          <% if (book.userId && book.userId.username) { %>
+            <div class="book-owner">
+                Added by: <%= book.userId.username %>
+            </div>
+          <% } %>
+          
           <div class="book-actions">
             <a href="/books/<%= book._id %>" class="btn-small btn-view">View</a>
             <a href="/books/<%= book._id %>/edit" class="btn-small btn-edit">Edit</a>

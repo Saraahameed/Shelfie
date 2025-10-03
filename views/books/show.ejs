@@ -43,9 +43,11 @@
           </div>
 
           <div class="book-actions">
-            <a href="/books/<%= book._id %>/edit" class="btn-small btn-edit">
-              <span>✏️ Edit Book</span>
-            </a>
+            <% if (user && book.userId._id.toString() === user._id.toString()) { %>
+                <a href="/books/<%= book._id %>/edit" class="btn-small btn-edit">
+                <span>✏️ Edit Book</span>
+                </a>
+            <% } %>
             <a href="/books" class="btn-small btn-view">
               <span>📚 Back to Books</span>
             </a>
