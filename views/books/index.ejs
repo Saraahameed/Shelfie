@@ -2,35 +2,71 @@
 <html>
 
 <head>
-    <title>All Books</title>
+  <title>All Books</title>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
-      <%- include('../partials/_navbar.ejs') %>
-    <h1>All Books</h1>
+  <div class="container">
+    <%- include('../partials/_navbar.ejs') %>
 
-    <% if (typeof msg !== 'undefined' && msg) { %>
-        <p><%= msg %></p>
-    <% } %>
+    <div class="main-content">
+      <h1>My Book Collection</h1>
 
-    <a href="/books/new">Add New Book</a>
-    <ul>
+      <% if (typeof msg !== 'undefined' && msg) { %>
+      <div class="message message-success">
+        <%= msg %>
+      </div>
+      <% } %>
+
+      <a href="/books/new" class="add-book-btn">
+        Add New Book
+      </a>
+
+      <div class="books-grid">
+        <% if (Array.isArray(books) && books.length > 0) { %>
         <% books.forEach(book => { %>
-            <li>
-                <a href="/books/<%= book._id %>"><%= book.title %> by <%= book.author %></a>
-                - Status: <%= book.status %>
-                <% if (book.rating) { %>
-                    - Rating: <%= book.rating %> ⭐
-                <% } %>
-                - <a href="/books/<%= book._id %>/edit">Edit</a>
-                <form action="/books/<%= book._id %>?_method=DELETE" method="POST" style="display:inline;">
-                    <button type="submit">Delete</button>
-                </form>
-            </li>
-        <% }) %>
-    </ul>
+        <div class="book-card">
+          <div class="book-cover">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+          </div>
+          <h2 class="book-title">
+            <%= book.title %>
+          </h2>
+          <p class="book-author">by <%= book.author %></p>
 
-    <a href="/">Back Home</a>
+          <span class="book-status <%= book.status === 'Read' ? 'status-read' : 'status-want' %>">
+            <%= book.status %>
+          </span>
+
+          <% if (book.rating) { %>
+          <div class="book-rating">
+            Rating: <%= book.rating %> ⭐
+          </div>
+          <% } %>
+
+          <div class="book-actions">
+            <a href="/books/<%= book._id %>" class="btn-small btn-view">View</a>
+            <a href="/books/<%= book._id %>/edit" class="btn-small btn-edit">Edit</a>
+            <form action="/books/<%= book._id %>?_method=DELETE" method="POST" style="display:inline;">
+              <button type="submit" class="btn-small btn-delete">Delete</button>
+            </form>
+          </div>
+        </div>
+        <% }) %>
+        <% } else { %>
+        <div class="empty-state">
+          <h2>No books found</h2>
+          <p>Start building your collection by adding some books!</p>
+        </div>
+        <% } %>
+      </div>
+
+      <a href="/" class="btn-small" style="margin-top: 2rem; display: inline-block;">Back Home</a>
+    </div>
+  </div>
 </body>
 
 </html>

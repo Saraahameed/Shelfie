@@ -1,18 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="/css/style.css" />
   <title>Home Page</title>
 </head>
+
 <body>
-<%- include('./partials/_navbar.ejs') %>
-
-<% if (user) { %>
-<h1>Welcome to the Shelfie, <%= user.username %>!</h1>
-<% } else { %>
-<h1>Welcome to Shelfie – where every book finds a friend!</h1>
-<% } %>
-
+  <div class="container">
+    <%- include('./partials/_navbar.ejs') %>
+    <div class="welcome-message">
+      <% if (user) { %>
+      <h1>Welcome to the Shelfie, <%= user.username %>!</h1>
+      <% } else { %>
+      <h1>Welcome to Shelfie – where every book finds a friend!</h1>
+      <% } %>
+    </div>
+  </div>
 </body>
+
 </html>
