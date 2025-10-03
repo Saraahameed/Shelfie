@@ -1,5 +1,24 @@
 const mongoose = require('mongoose');
 
+const reviewSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  username: String,
+  rating: {
+    type: Number,
+    min: 1,
+    max: 5
+  },
+  comment: String,
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
+});
+
 // Book schema
 const bookSchema = new mongoose.Schema({
   title: {
@@ -15,11 +34,16 @@ const bookSchema = new mongoose.Schema({
     enum: ['Want to Read', 'Read'],
     default: 'Want to Read',
   },
-  rating: {
-    type: Number,
-    min: 1,
-    max: 5,
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
   },
+  reviews: [reviewSchema],
+  averageRating: {
+    type: Number,
+    default: 0
+  }
 });
 
-module.exports = bookSchema;
+module.exports = mongoose.model('books', bookSchema);

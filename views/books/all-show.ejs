@@ -2,16 +2,15 @@
 <html>
 
 <head>
-  <title>My Books</title>
+  <title>All Books</title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
   <div class="container">
-    <%- include('../partials/_navbar.ejs') %>
 
     <div class="main-content">
-      <h1>My Book Collection</h1>
+      <h1>Book Collection</h1>
 
       <% if (typeof msg !== 'undefined' && msg) { %>
       <div class="message message-success">
@@ -19,16 +18,9 @@
       </div>
       <% } %>
 
-      <a href="/books/new" class="add-book-btn">
-        Add New Book
-      </a>
-
       <div class="books-grid">
-        
-        <% if (Array.isArray(books) && books.length > 0) { %>
-        <% const userBooks = books.filter(book => book.userId && book.userId._id.toString() === user._id.toString()) %>
-        <% if (userBooks.length > 0) { %>
-        <% userBooks.forEach(book => { %>
+        <% if (typeof books !== 'undefined' && Array.isArray(books) && books.length > 0) { %>
+        <% books.forEach(book => { %>
         <div class="book-card">
           <div class="book-cover">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -52,19 +44,15 @@
 
           <div class="book-actions">
             <a href="/books/<%= book._id %>" class="btn-small btn-view">View</a>
+            <% if (user && book.userId.toString() === user._id.toString()) { %>
             <a href="/books/<%= book._id %>/edit" class="btn-small btn-edit">Edit</a>
             <form action="/books/<%= book._id %>?_method=DELETE" method="POST" style="display:inline;">
               <button type="submit" class="btn-small btn-delete">Delete</button>
             </form>
+            <% } %>
           </div>
         </div>
         <% }) %>
-        <% } else { %>
-        <div class="empty-state">
-          <h2>No books in your collection</h2>
-          <p>Start building your collection by adding some books!</p>
-        </div>
-        <% } %>
         <% } else { %>
         <div class="empty-state">
           <h2>No books found</h2>

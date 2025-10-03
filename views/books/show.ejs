@@ -51,6 +51,39 @@
             </a>
           </div>
         </div>
+
+        <!-- Reviews Section -->
+        <div class="reviews-section">
+          <h3>Reviews</h3>
+          <% if (book.reviews && book.reviews.length > 0) { %>
+          <% book.reviews.forEach(review => { %>
+          <div class="review-card">
+            <p class="review-author"><%= review.username %></p>
+            <p class="review-rating">
+              <% for(let i = 0; i < review.rating; i++) { %>⭐<% } %>
+            </p>
+            <p class="review-comment"><%= review.comment %></p>
+          </div>
+          <% }) %>
+          <% } else { %>
+          <p>No reviews yet</p>
+          <% } %>
+
+          <!-- Add Review Form -->
+          <form action="/books/<%= book._id %>/reviews" method="POST" class="review-form">
+            <h4>Add Your Review</h4>
+            <select name="rating" required>
+              <option value="">Select Rating</option>
+              <option value="1">1 ⭐</option>
+              <option value="2">2 ⭐⭐</option>
+              <option value="3">3 ⭐⭐⭐</option>
+              <option value="4">4 ⭐⭐⭐⭐</option>
+              <option value="5">5 ⭐⭐⭐⭐⭐</option>
+            </select>
+            <textarea name="comment" placeholder="Write your review..." required></textarea>
+            <button type="submit">Submit Review</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
