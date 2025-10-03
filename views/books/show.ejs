@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Book Details</title>
+</head>
+
+<body>
+      <%- include('../partials/_navbar.ejs') %>
+    <h1><%= book.title %> by <%= book.author %></h1>
+    <p>Status: <%= book.status %></p>
+    <% if (book.rating) { %>
+        <p>Rating: <%= book.rating %> ⭐</p>
+    <% } %>
+    <a href="/books/<%= book._id %>/edit">Edit</a>
+    <a href="/books">Back to Books</a>
+</body>
+
+</html>

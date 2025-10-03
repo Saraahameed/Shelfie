@@ -58,7 +58,9 @@ router.post('/sign-in', async (req, res) => {
   };
 
   req.session.save(() => {
-    res.redirect('/');
+    const redirectUrl = req.session.returnTo || '/';
+    delete req.session.returnTo;
+    res.redirect(redirectUrl);
   });
 });
 

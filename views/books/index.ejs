@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>All Books</title>
+</head>
+
+<body>
+      <%- include('../partials/_navbar.ejs') %>
+    <h1>All Books</h1>
+
+    <% if (typeof msg !== 'undefined' && msg) { %>
+        <p><%= msg %></p>
+    <% } %>
+
+    <a href="/books/new">Add New Book</a>
+    <ul>
+        <% books.forEach(book => { %>
+            <li>
+                <a href="/books/<%= book._id %>"><%= book.title %> by <%= book.author %></a>
+                - Status: <%= book.status %>
+                <% if (book.rating) { %>
+                    - Rating: <%= book.rating %> ⭐
+                <% } %>
+                - <a href="/books/<%= book._id %>/edit">Edit</a>
+                <form action="/books/<%= book._id %>?_method=DELETE" method="POST" style="display:inline;">
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+        <% }) %>
+    </ul>
+
+    <a href="/">Back Home</a>
+</body>
+
+</html>
