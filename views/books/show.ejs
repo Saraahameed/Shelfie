@@ -172,6 +172,14 @@
                 <% for(let i = 0; i < review.rating; i++) { %>⭐<% } %>
               </div>
               <p class="review-comment"><%= review.comment %></p>
+              <% if (user && review.userId && review.userId._id.toString() === user._id.toString()) { %>
+              <div class="review-actions">
+                <a href="/books/<%= book._id %>/reviews/<%= review._id %>/edit" class="btn-small btn-edit">Edit</a>
+                <form action="/books/<%= book._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST" style="display:inline;">
+                  <button type="submit" class="btn-small btn-delete">Delete</button>
+                </form>
+              </div>
+              <% } %>
             </div>
             <% }) %>
             <% } else { %>
